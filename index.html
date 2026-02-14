@@ -2,37 +2,45 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <title>618Decor | Kiến Trúc & Nội Thất</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* Thêm font chữ cho sang trọng đúng chất kiến trúc */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Chống tràn màn hình ngang trên điện thoại */
+            -webkit-text-size-adjust: 100%; /* Giúp chữ không bị nhảy size trên iOS */
         }
 
-        /* Hiệu ứng mượt mà khi chuyển tab */
+        /* Hiệu ứng mượt mà */
         .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn 0.4s ease-out;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Tùy chỉnh thanh cuộn cho chuyên nghiệp */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #931A1A; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
-    
-    <div id="app"></div>
+<body class="bg-[#f8f9fa] text-[#1a1a1a]">
+
+    <header id="header-container"></header>
+
+    <main id="app" class="fade-in min-h-screen"></main>
+
+    <footer id="footer-container"></footer>
 
     <script src="modules/header.js"></script>
     <script src="modules/home.js"></script>
@@ -41,12 +49,32 @@
     <script src="modules/smart_tool.js"></script>
 
     <script>
-        // Hàm chuyển tab đơn giản để bạn bè test cho mượt
+        // Hàm chuyển Tab mượt mà tích hợp cho cả điện thoại và máy tính
         function switchTab(tabName) {
-            console.log("Chuyển sang tab: " + tabName);
+            console.log("Đang chuyển sang: " + tabName);
+            
+            // Cuộn lên đầu trang mỗi khi chuyển mục
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            // Logic hiển thị module tương ứng của ông ở đây
+
+            // Nếu là điện thoại, sau khi chọn menu thì nên đóng menu lại (nếu có)
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+
+            // Logic nạp dữ liệu từ các file .js của ông sẽ chạy ở đây
+            if (typeof renderContent === 'function') {
+                renderContent(tabName);
+            }
         }
+
+        // Tự động kiểm tra nếu link có chứa hashtag để nhảy đúng tab
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash) switchTab(hash);
+            else switchTab('home');
+        });
     </script>
+
 </body>
 </html>
