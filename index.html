@@ -1,164 +1,52 @@
 <!DOCTYPE html>
-
 <html lang="vi">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <title>618DECOR | Hệ thống quản lý kiến trúc số</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>618Decor | Kiến Trúc & Nội Thất</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.min.css">
 
     <style>
+        /* Thêm font chữ cho sang trọng đúng chất kiến trúc */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
 
-        body { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        /* Hiệu ứng mượt mà khi chuyển tab */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
 
-        .slide { transition: opacity 1.2s ease-in-out; }
-
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
-
 </head>
+<body class="bg-slate-50 text-slate-900">
+    
+    <div id="app"></div>
 
-<body class="bg-white text-slate-900">
-
-    <div id="global-header"></div>
-
-
-
-    <main id="main-content" class="min-h-screen"></main>
-
-
-
-    <div id="global-footer"></div>
-
-
-
-    <script>
-
-        // Hàm chạy Slider cho trang chủ
-
-        function run618Slider() {
-
-            var total = 7; 
-
-            var container = document.getElementById('slide-container');
-
-            var dotContainer = document.getElementById('dot-container');
-
-            if (!container || !dotContainer) return;
-
-            container.innerHTML = ''; dotContainer.innerHTML = '';
-
-            for (var i = 1; i <= total; i++) {
-
-                var div = document.createElement('div');
-
-                div.className = 'slide absolute inset-0 ' + (i==1?'opacity-100':'opacity-0');
-
-                var imgSrc = 'slides/slide (' + i + ').jpg';
-
-                div.innerHTML = '<img src="' + encodeURI(imgSrc) + '" class="w-full h-full object-cover">';
-
-                container.appendChild(div);
-
-                var dot = document.createElement('div');
-
-                dot.className = 'dot w-6 h-0.5 bg-white/20 transition-all duration-500';
-
-                dotContainer.appendChild(dot);
-
-            }
-
-            var current = 0;
-
-            var slides = document.getElementsByClassName('slide');
-
-            var dots = document.getElementsByClassName('dot');
-
-            function show(n) {
-
-                if(!slides.length) return;
-
-                for(var j=0; j<slides.length; j++) { 
-
-                    slides[j].style.opacity='0'; 
-
-                    dots[j].style.backgroundColor='rgba(255,255,255,0.2)';
-
-                }
-
-                slides[n].style.opacity='1'; 
-
-                dots[n].style.backgroundColor='#931A1A';
-
-            }
-
-            if(window.sliderTimer) clearInterval(window.sliderTimer);
-
-            window.sliderTimer = setInterval(function() { current = (current + 1) % total; show(current); }, 4000); 
-
-            show(0);
-
-        }
-
-
-
-        // Hàm chuyển Tab
-
-        function switchTab(t) {
-
-            const content = window['content_' + t];
-
-            const main = document.getElementById('main-content');
-
-            
-
-            if (content) {
-
-                main.innerHTML = content;
-
-                if(t === 'home') setTimeout(run618Slider, 100);
-
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            } else {
-
-                main.innerHTML = '<div class="p-40 text-center uppercase font-black text-slate-200 text-[10px] tracking-[0.5em] italic">Đang chờ nạp module ['+t+']...</div>';
-
-            }
-
-            
-
-            // Tự động cập nhật Header/Footer nếu có dữ liệu nạp ngầm
-
-            if(window.content_header) document.getElementById('global-header').innerHTML = window.content_header;
-
-            if(window.content_footer) document.getElementById('global-footer').innerHTML = window.content_footer;
-
-        }
-
-
-
-        window.onload = () => setTimeout(() => switchTab('home'), 500);
-
-    </script>
-
-
-
-    <script src="modules/about.js"></script>
-    <script src="modules/decor.js"></script>
-    <script src="modules/exterior.js"></script>
-    <script src="modules/exterior_villa.js"></script>
-    <script src="modules/footer.js"></script>
     <script src="modules/header.js"></script>
     <script src="modules/home.js"></script>
-    <script src="modules/interior.js"></script>
-    <script src="modules/landscape.js"></script>
-    <script src="modules/login.js"></script>
+    <script src="modules/footer.js"></script>
+    <script src="modules/training.js"></script>
+    <script src="modules/smart_tool.js"></script>
 
+    <script>
+        // Hàm chuyển tab đơn giản để bạn bè test cho mượt
+        function switchTab(tabName) {
+            console.log("Chuyển sang tab: " + tabName);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Logic hiển thị module tương ứng của ông ở đây
+        }
+    </script>
 </body>
-
 </html>
