@@ -1,0 +1,12 @@
+{
+    "about": "about.js",
+    "decor": "decor.js",
+    "exterior": "exterior.js",
+    "exterior_villa": "exterior_villa.js",
+    "footer": "footer.js",
+    "header": "header.js",
+    "home": "home.js",
+    "interior": "interior.js",
+    "landscape": "landscape.js",
+    "login": "login.js"
+}
